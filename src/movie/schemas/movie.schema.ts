@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-export type CatDocument = HydratedDocument<Movie>;
+export type MovieDocument = HydratedDocument<Movie>;
 
 @Schema()
 export class Movie {
@@ -27,11 +27,11 @@ export class Movie {
   @Prop()
   photo_uri: string;
 
-  @Prop()
-  rating: number;
+  @Prop({ default: [] })
+  ratings: { userId: string; rating: number }[]; // Array of objects to store user ratings
 
-  @Prop()
-  comments: string[];
+  @Prop({ default: [] })
+  comments: { userId: string; text: string }[]; // Array of objects to store user comments
 }
 
 export const MovieSchema = SchemaFactory.createForClass(Movie);

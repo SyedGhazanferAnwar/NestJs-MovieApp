@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LogInDTO } from './dto/log-in.dto';
-
+import { RegisterDTO } from './dto/register.dto';
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -22,5 +22,11 @@ export class AuthController {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
     return this.authService.login(user);
+  }
+
+  @Post('register')
+  async Register(@Body() registerDto: RegisterDTO) {
+    console.log({ registerDto });
+    return this.authService.register(registerDto);
   }
 }
