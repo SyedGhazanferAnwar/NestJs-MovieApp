@@ -5,32 +5,46 @@ import { Movie } from './schemas/movie.schema';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { CreateRatingDto } from './dto/create-rating.dto';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { ElasticsearchService } from '../elasticsearch/elasticsearch.service';
 
 @Injectable()
 export class MovieService {
-  constructor(@InjectModel(Movie.name) private movieModel: Model<Movie>) {}
+  constructor(
+    @InjectModel(Movie.name) private movieModel: Model<Movie>,
+    private elasticsearchService: ElasticsearchService,
+  ) {}
 
   async create(createMovieDto: CreateMovieDto): Promise<Movie> {
     const createdMovie = new this.movieModel(createMovieDto);
-    return createdMovie.save();
+    const movie = await createdMovie.save();
+    await this.elasticsearchService.indexFilm(movie);
+    return movie;
   }
 
   async getAllMovies(): Promise<Movie[]> {
     return this.movieModel.find().lean(true);
   }
   async getMovieById(id): Promise<Movie> {
-    throw new HttpException(
-      'Invalid movieId. Please provide a valid ObjectId.',
-      HttpStatus.BAD_REQUEST,
-    );
+    if (!Types.ObjectId.isValid(id)) {
+      throw new HttpException(
+        'Invalid movieId. Please provide a valid ObjectId.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     return this.movieModel.findById(id);
   }
   async deleteMovieById(id: string): Promise<Movie> {
-    return await this.movieModel.findByIdAndRemove(id);
+    const movie = await this.movieModel.findByIdAndRemove(id);
+    if (movie) await this.elasticsearchService.deleteFilm(id);
+    return movie;
   }
 
   async updateMovieById(id: string, item: CreateMovieDto): Promise<Movie> {
-    return await this.movieModel.findByIdAndUpdate(id, item, { new: true });
+    const movie = await this.movieModel.findByIdAndUpdate(id, item, {
+      new: true,
+    });
+    if (movie) await this.elasticsearchService.updateFilm(movie);
+    return movie;
   }
   async rateMovie(createRatingDto: CreateRatingDto, user: any): Promise<Movie> {
     if (!Types.ObjectId.isValid(createRatingDto.movieId)) {

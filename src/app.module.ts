@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { MovieModule } from './movie/movies.module';
+import { ElasticSearchModule } from './elasticsearch/elasticsearch.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { MovieModule } from './movie/movies.module';
       }),
     }),
     MovieModule,
+    ElasticSearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
