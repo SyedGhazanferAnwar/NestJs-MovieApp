@@ -12,7 +12,7 @@ import {
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { MovieService } from './movies.service';
 import { Movie } from './schemas/movie.schema';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CreateRatingDto } from './dto/create-rating.dto';
 
