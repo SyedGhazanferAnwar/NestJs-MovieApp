@@ -99,4 +99,12 @@ export class MovieService {
     await Movie.save();
     return Movie;
   }
+
+  async searchMovies(query: string, genre: string) {
+    const result = await this.elasticsearchService.searchMovies(
+      query,
+      genre || '',
+    );
+    return result;
+  }
 }

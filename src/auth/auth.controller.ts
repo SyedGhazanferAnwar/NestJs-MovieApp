@@ -1,9 +1,12 @@
 import {
   Body,
   Controller,
+  HttpCode,
   HttpException,
   HttpStatus,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LogInDTO } from './dto/log-in.dto';
@@ -13,6 +16,8 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('login')
+  @UsePipes(new ValidationPipe())
+  @HttpCode(HttpStatus.OK)
   async login(@Body() logInDto: LogInDTO) {
     const user = await this.authService.validateUser(
       logInDto.username,
@@ -25,8 +30,9 @@ export class AuthController {
   }
 
   @Post('register')
+  @UsePipes(new ValidationPipe())
+  @HttpCode(HttpStatus.OK)
   async Register(@Body() registerDto: RegisterDTO) {
-    console.log({ registerDto });
     return this.authService.register(registerDto);
   }
 }
