@@ -1,7 +1,7 @@
 # NestJS MovieApp
 
 
-NestJS MovieApp is a movie management application that allows users to perform CRUD operations on movies, register, and authenticate users. The app is designed with simplicity and scalability in mind, making it an ideal solution for managing movie data efficiently.
+NestJS MovieApp is a movie management application that allows users to perform CRUD operations on movies, register, and authenticate users. The app is designed with simplicity and scalability, making it an ideal solution for managing movie data efficiently.
 
 ## Key Features
 
@@ -13,9 +13,10 @@ NestJS MovieApp is a movie management application that allows users to perform C
 
 4. **API Documentation**: The application comes with detailed API documentation powered by Swagger, accessible at `http://localhost:3000/docs`.
 
-5. **Implement Ranking or Scoring for Films** (Not Implemented due to Shortage of Time)
+5. **Implement Ranking or Scoring for Films**: Movies are ranked or scored based on specific genres. This allows for boosting films that match certain criteria, influencing the relevance of search results.
 
-6. **Search and Autocomplete** (Not Implemented due to Shortage of Time)
+6. **Search** Users can search movies by name and/or description, and filter by popularity, genre, country, or rating. The solution considers misspelled words and ignores stop words for enhanced search accuracy.
+
 ## Installation and Configuration
 
 To run the NestJS MovieApp, follow these steps:
@@ -34,14 +35,14 @@ To run the NestJS MovieApp, follow these steps:
 To start the application, use the following command:
 
 ```bash
-npm run start:dev
+yarn start
 ```
 
 The NestJS MovieApp will be available at `http://localhost:3000`.
 
 ## Note
 
-Please note that due to time constraints, some optimizations like validations with Joi and additional enhancements are not be fully implemented in this submission. However, I am committed to further improving and expanding the application in the future.
+Please note that due to time constraints, some optimizations are not fully implemented in this submission. However, I am committed to further improving and expanding the application in the future.
 
 ## Contact
 
