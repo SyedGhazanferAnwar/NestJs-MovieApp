@@ -1,0 +1,1185 @@
+
+=== File: tsconfig.json ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/tsconfig.json:1-21
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
+}
+
+=== File: .env.example ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/.env.example:1-1
+MONGODB_CONNECTION_STRING=""
+
+=== File: package.json ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/package.json:1-79
+{
+  "name": "nestjs-assignment",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.8.1",
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.0.0",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/elasticsearch": "^10.0.1",
+    "@nestjs/jwt": "^10.1.0",
+    "@nestjs/mongoose": "^10.0.1",
+    "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.1.2",
+    "bcrypt": "^5.1.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "mongoose": "^7.4.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.0.0",
+    "@nestjs/schematics": "^10.0.0",
+    "@nestjs/testing": "^10.0.0",
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.2",
+    "@types/node": "^20.3.1",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.59.11",
+    "@typescript-eslint/parser": "^5.59.11",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.8",
+    "source-map-support": "^0.5.21",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.0",
+    "ts-loader": "^9.4.3",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.1.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
+
+=== File: README.md ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/README.md:1-54
+# NestJS MovieApp
+
+
+NestJS MovieApp is a movie management application that allows users to perform CRUD operations on movies, register, and authenticate users. The app is designed with simplicity and scalability, making it an ideal solution for managing movie data efficiently.
+
+## Key Features
+
+1. **Movie Management**: Users can create, read, update, and delete movies, providing full control over the movie database.
+
+2. **User Authentication**: The application supports user registration and authentication using JSON Web Tokens (JWT), ensuring secure access to movie management features.
+
+3. **Rating and Comments**: Authenticated users can rate movies and leave comments, encouraging user engagement and feedback.
+
+4. **API Documentation**: The application comes with detailed API documentation powered by Swagger, accessible at `http://localhost:3000/docs`.
+
+5. **Implement Ranking or Scoring for Films**: Movies are ranked or scored based on specific genres. This allows for boosting films that match certain criteria, influencing the relevance of search results.
+
+6. **Search** Users can search movies by name and/or description, and filter by popularity, genre, country, or rating. The solution considers misspelled words and ignores stop words for enhanced search accuracy.
+
+## Installation and Configuration
+
+To run the NestJS MovieApp, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/SyedGhazanferAnwar/NestJs-MovieApp.git`
+
+2. Install dependencies: `npm install`
+
+3. Configure MONGODB_CONNECTION_STRING in the .env file.
+
+4. Configure Elasticsearch (Optional): If you are using Elasticsearch, ensure it is installed and running, and update the Elasticsearch node URL in `src/elasticsearch/elasticsearch.service.ts`.
+
+
+## Running the Application
+
+To start the application, use the following command:
+
+```bash
+yarn start
+```
+
+The NestJS MovieApp will be available at `http://localhost:3000`.
+
+## Note
+
+Please note that due to time constraints, some optimizations are not fully implemented in this submission. However, I am committed to further improving and expanding the application in the future.
+
+## Contact
+
+If you have any questions or feedback, please feel free to reach out to me at s.ghazanferanwar@gmail.com. I look forward to discussing this assignment further and contributing my skills.
+
+Thank you for considering my submission.
+
+Best regards,
+Syed Ghazanfer Anwar
+
+=== File: nest-cli.json ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/nest-cli.json:1-9
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "plugins": ["@nestjs/swagger"]
+  }
+}
+
+=== File: .gitignore ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/.gitignore:1-36
+# compiled output
+/dist
+/node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.env
+
+=== File: tsconfig.build.json ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/tsconfig.build.json:1-4
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+}
+
+=== File: .prettierrc ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/.prettierrc:1-4
+{
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+
+=== File: .eslintrc.js ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/.eslintrc.js:1-25
+module.exports = {
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
+    sourceType: 'module',
+  },
+  plugins: ['@typescript-eslint/eslint-plugin'],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+  ],
+  root: true,
+  env: {
+    node: true,
+    jest: true,
+  },
+  ignorePatterns: ['.eslintrc.js'],
+  rules: {
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+  },
+};
+
+=== File: src/app.module.ts ===
+
+-- Chunk 1 --
+// app.module.ts:20-22
+async (config: ConfigService) => ({
+        uri: config.get<string>('MONGODB_CONNECTION_STRING'),
+      })
+
+-- Chunk 2 --
+// app.module.ts:30-30
+class AppModule {}
+
+=== File: src/app.service.ts ===
+
+-- Chunk 1 --
+// app.service.ts:4-8
+class AppService {
+  getHello(): string {
+    return 'Hello World!';
+  }
+}
+
+=== File: src/app.controller.spec.ts ===
+
+-- Chunk 1 --
+// app.controller.spec.ts:5-22
+() => {
+  let appController: AppController;
+
+  beforeEach(async () => {
+    const app: TestingModule = await Test.createTestingModule({
+      controllers: [AppController],
+      providers: [AppService],
+    }).compile();
+
+    appController = app.get<AppController>(AppController);
+  });
+
+  describe('root', () => {
+    it('should return "Hello World!"', () => {
+      expect(appController.getHello()).toBe('Hello World!');
+    });
+  });
+}
+
+=== File: src/main.ts ===
+
+-- Chunk 1 --
+// main.ts:5-17
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.enableCors();
+  const options = new DocumentBuilder()
+    .setTitle('NestJS Movie App')
+    .setDescription('NestJS Movie App')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('/docs', app, document);
+  await app.listen(3000);
+}
+
+=== File: src/app.controller.ts ===
+
+-- Chunk 1 --
+// app.controller.ts:5-12
+class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  getHello(): string {
+    return this.appService.getHello();
+  }
+}
+
+=== File: src/movie/movies.module.ts ===
+
+-- Chunk 1 --
+// movies.module.ts:15-15
+class MovieModule {}
+
+=== File: src/movie/movies.service.spec.ts ===
+
+-- Chunk 1 --
+// movies.service.spec.ts:7-31
+() => {
+  let service: MovieService;
+  const jwtServiceMock = {
+    verify: () => true,
+  };
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        AuthGuard,
+        {
+          provide: MovieService,
+          useValue: {}, // Provide an empty object as a mock for AuthService
+        },
+        { provide: JwtService, useValue: jwtServiceMock },
+        MovieController, // Add the AuthController to the providers array
+      ],
+    }).compile();
+
+    service = module.get<MovieService>(MovieService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+}
+
+=== File: src/movie/movies.service.ts ===
+
+-- Chunk 1 --
+// movies.service.ts:11-110
+class MovieService {
+  constructor(
+    @InjectModel(Movie.name) private movieModel: Model<Movie>,
+    private elasticsearchService: ElasticsearchService,
+  ) {}
+
+  async create(createMovieDto: CreateMovieDto): Promise<Movie> {
+    const createdMovie = new this.movieModel(createMovieDto);
+    const movie = await createdMovie.save();
+    await this.elasticsearchService.indexFilm(movie);
+    return movie;
+  }
+
+  async getAllMovies(): Promise<Movie[]> {
+    return this.movieModel.find().lean(true);
+  }
+  async getMovieById(id): Promise<Movie> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new HttpException(
+        'Invalid movieId. Please provide a valid ObjectId.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return this.movieModel.findById(id);
+  }
+  async deleteMovieById(id: string): Promise<Movie> {
+    const movie = await this.movieModel.findByIdAndRemove(id);
+    if (movie) await this.elasticsearchService.deleteFilm(id);
+    return movie;
+  }
+
+  async updateMovieById(id: string, item: CreateMovieDto): Promise<Movie> {
+    const movie = await this.movieModel.findByIdAndUpdate(id, item, {
+      new: true,
+    });
+    if (movie) await this.elasticsearchService.updateFilm(movie);
+    return movie;
+  }
+  async rateMovie(createRatingDto: CreateRatingDto, user: any): Promise<Movie> {
+    if (!Types.ObjectId.isValid(createRatingDto.movieId)) {
+      throw new HttpException(
+        'Invalid movieId. Please provide a valid ObjectId.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const Movie = await this.movieModel.findById(createRatingDto.movieId);
+    if (!Movie) {
+      throw new HttpException('Movie not found.', HttpStatus.BAD_REQUEST);
+    }
+
+    // Ensure the user hasn't rated the Movie before
+    const existingRating = Movie.ratings.find(
+      (rating) => rating.userId === user.userId,
+    );
+    if (existingRating) {
+      throw new HttpException(
+        'You have already rated this Movie.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    Movie.ratings.push({
+      userId: user.userId,
+      rating: createRatingDto.rating,
+    });
+    await Movie.save();
+    return Movie;
+  }
+
+  async commentOnMovie(
+    createCommentDto: CreateCommentDto,
+    user: any,
+  ): Promise<Movie> {
+    if (!Types.ObjectId.isValid(createCommentDto.movieId)) {
+      throw new HttpException(
+        'Invalid movieId. Please provide a valid ObjectId.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const Movie = await this.movieModel.findById(createCommentDto.movieId);
+    if (!Movie) {
+      throw new HttpException('Movie not found.', HttpStatus.BAD_REQUEST);
+    }
+
+    Movie.comments.push({
+      userId: user.userId,
+      text: createCommentDto.text,
+    });
+    await Movie.save();
+    return Movie;
+  }
+
+  async searchMovies(query: string, genre: string) {
+    const result = await this.elasticsearchService.searchMovies(
+      query,
+      genre || '',
+    );
+    return result;
+  }
+}
+
+=== File: src/movie/movies.controller.spec.ts ===
+
+-- Chunk 1 --
+// movies.controller.spec.ts:7-70
+() => {
+  let movieController: MovieController;
+  let movieService: MovieService;
+
+  const jwtServiceMock = {
+    verify: () => true,
+  };
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [MovieController],
+      providers: [
+        AuthGuard,
+
+        {
+          provide: MovieService,
+          useValue: {
+            create: jest.fn(),
+          }, // Provide an empty object as a mock for AuthService
+        },
+        { provide: JwtService, useValue: jwtServiceMock },
+      ],
+    }).compile();
+
+    movieController = module.get<MovieController>(MovieController);
+    movieService = module.get<MovieService>(MovieService);
+  });
+
+  it('should be defined', () => {
+    expect(movieController).toBeDefined();
+  });
+
+  describe('create movie', () => {
+    const createMovieInput = {
+      name: 'test435-movie',
+      description: 'test-movie description',
+      release_date: '30/12/2009',
+      ticket_price: 30,
+      country: 'pakistan',
+      genre: 'action',
+      photo_uri: 'test-image uri',
+    };
+
+    const resp: any = {
+      name: 'test435-movie',
+      description: 'test-movie description',
+      release_date: '30/12/2009',
+      ticket_price: 30,
+      country: 'pakistan',
+      genre: 'action',
+      photo_uri: 'test-image uri',
+      ratings: [],
+      comments: [],
+      _id: '64c696c8bb2961dbd51b94d2',
+      __v: 0,
+    };
+
+    it('should register a user', async () => {
+      jest.spyOn(movieService, 'create').mockResolvedValue(resp);
+      const result = await movieController.create(createMovieInput);
+      expect(result).toEqual(resp);
+      expect(movieService.create).toHaveBeenCalledWith(createMovieInput);
+    });
+  });
+}
+
+=== File: src/movie/movies.controller.ts ===
+
+-- Chunk 1 --
+// movies.controller.ts:23-83
+class MovieController {
+  constructor(private readonly movieService: MovieService) {}
+
+  @Post()
+  @UsePipes(new ValidationPipe())
+  async create(@Body() createMovie: CreateMovieDto): Promise<Movie> {
+    return this.movieService.create(createMovie);
+  }
+  @Get()
+  @UsePipes(new ValidationPipe())
+  async getAllMovies(): Promise<Movie[]> {
+    return this.movieService.getAllMovies();
+  }
+
+  @Get('search')
+  @UsePipes(new ValidationPipe())
+  async searchMovies(
+    @Query('query') query: string,
+    @Query('genre') genre: string,
+  ): Promise<any> {
+    if (!query) {
+      return [];
+    }
+
+    const results = await this.movieService.searchMovies(query, genre);
+    return results;
+  }
+
+  @Get(':id')
+  @UsePipes(new ValidationPipe())
+  async getMovieById(@Param('id') id: string): Promise<Movie> {
+    return this.movieService.getMovieById(id);
+  }
+  @Delete(':id')
+  async deleteMovieById(@Param('id') id): Promise<Movie> {
+    return this.movieService.deleteMovieById(id);
+  }
+
+  @Put(':id')
+  @UsePipes(new ValidationPipe())
+  updateMovieById(
+    @Body() updateMovieDto: CreateMovieDto,
+    @Param('id') id,
+  ): Promise<Movie> {
+    return this.movieService.updateMovieById(id, updateMovieDto);
+  }
+
+  @Post('rate')
+  @UsePipes(new ValidationPipe())
+  @UseGuards(AuthGuard)
+  rateMovie(@Request() req, @Body() createRatingDto: CreateRatingDto) {
+    return this.movieService.rateMovie(createRatingDto, req.user);
+  }
+
+  @Post('comment')
+  @UsePipes(new ValidationPipe())
+  @UseGuards(AuthGuard)
+  commentOnFilm(@Request() req, @Body() createCommentDto: CreateCommentDto) {
+    return this.movieService.commentOnMovie(createCommentDto, req.user);
+  }
+}
+
+=== File: src/movie/schemas/movie.schema.ts ===
+
+-- Chunk 1 --
+// movie.schema.ts:4-4
+type MovieDocument = HydratedDocument<Movie>;
+
+-- Chunk 2 --
+// movie.schema.ts:7-35
+class Movie {
+  @Prop({ required: true })
+  name: string;
+
+  @Prop()
+  description: string;
+
+  @Prop()
+  release_date: string;
+
+  // For the sake of this project, we will assume we only have ticket prices in PKR
+  @Prop()
+  ticket_price: number;
+
+  @Prop()
+  country: string;
+
+  @Prop()
+  genre: string;
+
+  @Prop()
+  photo_uri: string;
+
+  @Prop({ default: [] })
+  ratings: { userId: string; rating: number }[]; // Array of objects to store user ratings
+
+  @Prop({ default: [] })
+  comments: { userId: string; text: string }[]; // Array of objects to store user comments
+}
+
+=== File: src/movie/dto/create-comment.dto.ts ===
+
+-- Chunk 1 --
+// create-comment.dto.ts:2-10
+class CreateCommentDto {
+  @IsString()
+  @IsNotEmpty({ message: 'movieId is required' })
+  movieId: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'text is required' })
+  text: string;
+}
+
+=== File: src/movie/dto/create-movie.dto.ts ===
+
+-- Chunk 1 --
+// create-movie.dto.ts:2-30
+class CreateMovieDto {
+  @IsString()
+  @IsNotEmpty({ message: 'name is required' })
+  name: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'description is required' })
+  description?: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'release_date is required' })
+  release_date?: string;
+
+  @IsNumber()
+  @IsNotEmpty({ message: 'ticket_price is required' })
+  ticket_price?: number;
+
+  @IsString()
+  @IsOptional()
+  country?: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'genre is required' })
+  genre: string;
+
+  @IsString()
+  @IsOptional()
+  photo_uri?: string;
+}
+
+=== File: src/movie/dto/create-rating.dto.ts ===
+
+-- Chunk 1 --
+// create-rating.dto.ts:2-10
+class CreateRatingDto {
+  @IsString()
+  @IsNotEmpty({ message: 'movieId is required' })
+  movieId: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Rating is required' })
+  rating: number;
+}
+
+=== File: src/auth/auth.service.ts ===
+
+-- Chunk 1 --
+// auth.service.ts:11-65
+class AuthService {
+  constructor(
+    private readonly jwtService: JwtService,
+    @InjectModel(User.name) private userModel: Model<User>,
+  ) {}
+
+  async validateUser(username: string, password: string): Promise<any> {
+    const user = await this.userModel.findOne({ username }).lean(true);
+
+    if (user) {
+      const isMatch = await bcrypt.compare(password, user.passwordHash);
+      if (isMatch) {
+        delete user.passwordHash;
+        return user;
+      }
+      return null;
+    }
+    return null;
+  }
+
+  async login(user: any) {
+    const payload = { userId: user._id, username: user.username };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
+  async register(registerDto: RegisterDTO): Promise<UserResponseDTO> {
+    const { username, email, password, firstName, lastName } = registerDto;
+
+    const existingUser = await this.userModel.findOne({
+      $or: [{ username }, { email }],
+    });
+    if (existingUser) {
+      throw new HttpException('User already exists', HttpStatus.UNAUTHORIZED);
+    }
+    const salt = await bcrypt.genSalt();
+
+    const passwordHash = await bcrypt.hash(password, salt);
+
+    const newUser = new this.userModel({
+      firstName,
+      lastName,
+      username,
+      email,
+      passwordHash: passwordHash,
+    });
+    const user = await newUser.save();
+    return {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username,
+    };
+  }
+}
+
+=== File: src/auth/auth.service.spec.ts ===
+
+-- Chunk 1 --
+// auth.service.spec.ts:5-25
+() => {
+  let service: AuthService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        {
+          provide: AuthService,
+          useValue: {}, // Provide an empty object as a mock for AuthService
+        },
+        AuthController, // Add the AuthController to the providers array
+      ],
+    }).compile();
+
+    service = module.get<AuthService>(AuthService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+}
+
+=== File: src/auth/constants.ts ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/src/auth/constants.ts:1-3
+export const jwtConstants = {
+  secret: 'g5sfljha454sdas6fsf4dasf8',
+};
+
+=== File: src/auth/auth.controller.ts ===
+
+-- Chunk 1 --
+// auth.controller.ts:15-38
+class AuthController {
+  constructor(private authService: AuthService) {}
+
+  @Post('login')
+  @UsePipes(new ValidationPipe())
+  @HttpCode(HttpStatus.OK)
+  async login(@Body() logInDto: LogInDTO) {
+    const user = await this.authService.validateUser(
+      logInDto.username,
+      logInDto.password,
+    );
+    if (!user) {
+      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+    }
+    return this.authService.login(user);
+  }
+
+  @Post('register')
+  @UsePipes(new ValidationPipe())
+  @HttpCode(HttpStatus.OK)
+  async Register(@Body() registerDto: RegisterDTO) {
+    return this.authService.register(registerDto);
+  }
+}
+
+=== File: src/auth/auth.guard.ts ===
+
+-- Chunk 1 --
+// auth.guard.ts:12-33
+class AuthGuard implements CanActivate {
+  constructor(private readonly jwtService: JwtService) {}
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    const token = this.extractTokenFromHeader(request);
+
+    try {
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: jwtConstants.secret,
+      });
+      request['user'] = payload;
+    } catch (err) {
+      throw new UnauthorizedException();
+    }
+    return true;
+  }
+  private extractTokenFromHeader(request: Request): string | undefined {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
+  }
+}
+
+=== File: src/auth/auth.controller.spec.ts ===
+
+-- Chunk 1 --
+// auth.controller.spec.ts:5-52
+() => {
+  let authController: AuthController;
+  let authService: AuthService;
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [AuthController],
+      providers: [
+        {
+          provide: AuthService,
+          useValue: {
+            register: jest.fn(),
+          }, // Provide an empty object as a mock for AuthController
+        },
+      ],
+    }).compile();
+
+    authController = module.get<AuthController>(AuthController);
+    authService = module.get<AuthService>(AuthService);
+  });
+
+  it('should be defined', () => {
+    expect(authController).toBeDefined();
+  });
+
+  describe('register', () => {
+    const registerInput = {
+      firstName: 'test firstname',
+      lastName: 'test lastname',
+      email: 'test@test.com',
+      username: 'testusername',
+      password: 'testpass',
+    };
+
+    const resp: any = {
+      firstName: 'test firstname',
+      lastName: 'test lastname',
+      email: 'test@test.com',
+      username: 'testusername',
+    };
+
+    it('should register a user', async () => {
+      jest.spyOn(authService, 'register').mockResolvedValue(resp);
+      const result = await authController.Register(registerInput);
+      expect(result).toEqual(resp);
+      expect(authService.register).toHaveBeenCalledWith(registerInput);
+    });
+  });
+}
+
+=== File: src/auth/auth.module.ts ===
+
+-- Chunk 1 --
+// auth.module.ts:21-21
+class AuthModule {}
+
+=== File: src/auth/user/user.schema.ts ===
+
+-- Chunk 1 --
+// user.schema.ts:4-4
+type UserDocument = HydratedDocument<User>;
+
+-- Chunk 2 --
+// user.schema.ts:7-22
+class User {
+  @Prop({ required: true })
+  firstName: string;
+
+  @Prop({ required: true })
+  lastName: string;
+
+  @Prop({ required: true })
+  email: string;
+
+  @Prop({ required: true })
+  username: string;
+
+  @Prop({ required: true })
+  passwordHash: string;
+}
+
+=== File: src/auth/dto/user-response.dto.ts ===
+
+-- Chunk 1 --
+// user-response.dto.ts:3-19
+class UserResponseDTO {
+  @IsString()
+  @IsNotEmpty({ message: 'firstName is required' })
+  firstName: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'lastName is required' })
+  lastName: string;
+
+  @IsEmail()
+  @IsNotEmpty({ message: 'email is required' })
+  email: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'username is required' })
+  username: string;
+}
+
+=== File: src/auth/dto/log-in.dto.ts ===
+
+-- Chunk 1 --
+// log-in.dto.ts:2-10
+class LogInDTO {
+  @IsString()
+  @IsNotEmpty({ message: 'username is required' })
+  username: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'password is required' })
+  password: string;
+}
+
+=== File: src/auth/dto/register.dto.ts ===
+
+-- Chunk 1 --
+// register.dto.ts:2-22
+class RegisterDTO {
+  @IsString()
+  @IsNotEmpty({ message: 'firstName is required' })
+  firstName: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'lastName is required' })
+  lastName: string;
+
+  @IsEmail()
+  @IsNotEmpty({ message: 'email is required' })
+  email: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'username is required' })
+  username: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'password is required' })
+  password: string;
+}
+
+=== File: src/elasticsearch/elasticsearch.module.ts ===
+
+-- Chunk 1 --
+// elasticsearch.module.ts:14-14
+class ElasticSearchModule {}
+
+=== File: src/elasticsearch/elasticsearch.service.spec.ts ===
+
+-- Chunk 1 --
+// elasticsearch.service.spec.ts:4-18
+() => {
+  let service: ElasticsearchService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [ElasticsearchService],
+    }).compile();
+
+    service = module.get<ElasticsearchService>(ElasticsearchService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+}
+
+=== File: src/elasticsearch/elasticsearch.service.ts ===
+
+-- Chunk 1 --
+// elasticsearch.service.ts:6-95
+class ElasticsearchService {
+  private readonly client: Client;
+
+  constructor() {
+    this.client = new Client({ node: 'http://localhost:9200' }); // Change this to your Elasticsearch server URL
+  }
+
+  async indexFilm(movie: any): Promise<void> {
+    await this.client.index({
+      index: 'films',
+      id: movie._id.toString(),
+      body: {
+        name: movie.name,
+        description: movie.description,
+        release_date: movie.release_date,
+        ticket_price: movie.ticket_price,
+        country: movie.country,
+        genre: movie.genre,
+        photo_uri: movie.photo_uri,
+      },
+    });
+  }
+
+  async updateFilm(movie: any): Promise<void> {
+    await this.client.update({
+      index: 'films',
+      id: movie._id.toString(),
+      body: {
+        doc: {
+          name: movie.name,
+          description: movie.description,
+          release_date: movie.release_date,
+          ticket_price: movie.ticket_price,
+          country: movie.country,
+          genre: movie.genre,
+          photo_uri: movie.photo_uri,
+        },
+      },
+    });
+  }
+
+  async searchMovies(query: string, genre: string): Promise<any> {
+    const response: any = await this.client.search({
+      index: 'films',
+      body: {
+        query: {
+          function_score: {
+            query: {
+              multi_match: {
+                query,
+                fields: ['name', 'description'],
+                fuzziness: 'AUTO',
+              },
+            },
+            functions: [
+              {
+                filter: {
+                  term: {
+                    genre,
+                  },
+                },
+                weight: 2,
+              },
+              // If we want we can boost by director as well (Not in scope for this project)
+              // {
+              //   filter: {
+              //     term: {
+              //       director: directorName,
+              //     },
+              //   },
+              //   weight: 3,
+              // },
+            ],
+            boost_mode: 'sum', // Use the sum of query score and function scores
+          },
+        },
+      },
+    });
+    console.log({ response });
+
+    return response.hits.hits.map((hit) => hit._source);
+  }
+
+  async deleteFilm(filmId: string): Promise<void> {
+    await this.client.delete({
+      index: 'films',
+      id: filmId,
+    });
+  }
+}
+
+=== File: test/jest-e2e.json ===
+
+-- Chunk 1 --
+// /home/ghazanfer/Extended-Ubuntu/KOII/bug-finder/worker/orca-agent/repos/repo_8/test/jest-e2e.json:1-9
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}
+
+=== File: test/app.e2e-spec.ts ===
+
+-- Chunk 1 --
+// app.e2e-spec.ts:6-24
+() => {
+  let app: INestApplication;
+
+  beforeEach(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = moduleFixture.createNestApplication();
+    await app.init();
+  });
+
+  it('/ (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(200)
+      .expect('Hello World!');
+  });
+}
