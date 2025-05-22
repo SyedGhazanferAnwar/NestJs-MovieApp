@@ -20,6 +20,7 @@ describe('AuthService', () => {
     firstName: 'Test',
     lastName: 'User',
     passwordHash: 'hashed-password',
+    save: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -108,12 +109,12 @@ describe('AuthService', () => {
       jest.spyOn(bcrypt, 'genSalt').mockResolvedValue('mock-salt' as never);
       jest.spyOn(bcrypt, 'hash').mockResolvedValue('hashed-password' as never);
       
-      const mockSavedUser = {
-        ...mockUser, 
-        ...registerDto, 
-        passwordHash: 'hashed-password', 
+      const mockSavedUser = new mockUserModel({
+        ...registerDto,
+        passwordHash: 'hashed-password',
         save: jest.fn().mockResolvedValue(mockUser)
-      };
+      });
+      
       jest.spyOn(mockUserModel.prototype, 'save').mockResolvedValue(mockSavedUser as any);
 
       const result = await authService.register(registerDto);
