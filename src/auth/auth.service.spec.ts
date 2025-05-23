@@ -20,7 +20,7 @@ describe('AuthService', () => {
     firstName: 'Test',
     lastName: 'User',
     passwordHash: 'hashed-password',
-    lean: jest.fn().mockReturnThis(), // Mock lean method
+    lean: () => mockUserData,
     save: jest.fn(),
   };
 
@@ -37,7 +37,9 @@ describe('AuthService', () => {
         {
           provide: getModelToken(User.name),
           useValue: {
-            findOne: jest.fn().mockReturnValue(mockUserData),
+            findOne: jest.fn().mockImplementation(() => ({
+              lean: () => mockUserData
+            })),
             save: jest.fn(),
             create: jest.fn(),
           },
@@ -66,7 +68,9 @@ describe('AuthService', () => {
     });
 
     it('should return null if user is not found', async () => {
-      mockUserModel.findOne.mockReturnValue({ lean: jest.fn().mockReturnValue(null) });
+      mockUserModel.findOne.mockImplementationOnce(() => ({
+        lean: () => null
+      }));
 
       const result = await authService.validateUser('nonexistent', 'password');
       
@@ -111,6 +115,7 @@ describe('AuthService', () => {
       const mockNewUser = {
         ...registerDto,
         passwordHash: 'hashed-password',
+        _id: 'new-user-id',
         save: jest.fn().mockResolvedValue({
           ...registerDto,
           _id: 'new-user-id',
@@ -118,7 +123,8 @@ describe('AuthService', () => {
         }),
       };
       
-      mockUserModel.prototype.save.mockResolvedValue(mockNewUser);
+      mockUserModel.save = jest.fn().mockResolvedValue(mockNewUser);
+      mockUserModel.prototype.save = jest.fn().mockResolvedValue(mockNewUser);
 
       const result = await authService.register(registerDto);
       
