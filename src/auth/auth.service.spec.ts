@@ -10,7 +10,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 describe('AuthService', () => {
   let authService: AuthService;
-  let mockUserModel: any;
+  let mockUserModel: jest.Mocked<Model<User>>;
   let mockJwtService: JwtService;
 
   const mockUserData = {
@@ -20,8 +20,6 @@ describe('AuthService', () => {
     firstName: 'Test',
     lastName: 'User',
     passwordHash: 'hashed-password',
-    lean: () => mockUserData,
-    save: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -37,11 +35,12 @@ describe('AuthService', () => {
         {
           provide: getModelToken(User.name),
           useValue: {
-            findOne: jest.fn().mockImplementation(() => ({
-              lean: () => mockUserData
-            })),
+            findOne: jest.fn(),
             save: jest.fn(),
             create: jest.fn(),
+            prototype: {
+              save: jest.fn(),
+            },
           },
         },
       ],
@@ -54,6 +53,11 @@ describe('AuthService', () => {
 
   describe('validateUser', () => {
     it('should return user without password hash if credentials are valid', async () => {
+      jest.spyOn(mockUserModel, 'findOne').mockResolvedValue({
+        ...mockUserData,
+        lean: () => mockUserData,
+      } as any);
+      
       jest.spyOn(bcrypt, 'compare').mockResolvedValue(true as never);
 
       const result = await authService.validateUser('testuser', 'password');
@@ -68,9 +72,7 @@ describe('AuthService', () => {
     });
 
     it('should return null if user is not found', async () => {
-      mockUserModel.findOne.mockImplementationOnce(() => ({
-        lean: () => null
-      }));
+      jest.spyOn(mockUserModel, 'findOne').mockResolvedValue(null);
 
       const result = await authService.validateUser('nonexistent', 'password');
       
@@ -78,6 +80,11 @@ describe('AuthService', () => {
     });
 
     it('should return null if password does not match', async () => {
+      jest.spyOn(mockUserModel, 'findOne').mockResolvedValue({
+        ...mockUserData,
+        lean: () => mockUserData,
+      } as any);
+      
       jest.spyOn(bcrypt, 'compare').mockResolvedValue(false as never);
 
       const result = await authService.validateUser('testuser', 'wrongpassword');
@@ -108,14 +115,14 @@ describe('AuthService', () => {
     };
 
     it('should successfully register a new user', async () => {
-      mockUserModel.findOne.mockResolvedValue(null);
+      jest.spyOn(mockUserModel, 'findOne').mockResolvedValue(null);
       jest.spyOn(bcrypt, 'genSalt').mockResolvedValue('mock-salt' as never);
       jest.spyOn(bcrypt, 'hash').mockResolvedValue('hashed-password' as never);
       
       const mockNewUser = {
         ...registerDto,
-        passwordHash: 'hashed-password',
         _id: 'new-user-id',
+        passwordHash: 'hashed-password',
         save: jest.fn().mockResolvedValue({
           ...registerDto,
           _id: 'new-user-id',
@@ -123,8 +130,7 @@ describe('AuthService', () => {
         }),
       };
       
-      mockUserModel.save = jest.fn().mockResolvedValue(mockNewUser);
-      mockUserModel.prototype.save = jest.fn().mockResolvedValue(mockNewUser);
+      mockUserModel.prototype.save.mockResolvedValue(mockNewUser as any);
 
       const result = await authService.register(registerDto);
       
@@ -137,7 +143,7 @@ describe('AuthService', () => {
     });
 
     it('should throw an exception if user already exists', async () => {
-      mockUserModel.findOne.mockResolvedValue(mockUserData);
+      jest.spyOn(mockUserModel, 'findOne').mockResolvedValue(mockUserData);
 
       await expect(authService.register(registerDto)).rejects.toThrow(
         new HttpException('User already exists', HttpStatus.UNAUTHORIZED)
