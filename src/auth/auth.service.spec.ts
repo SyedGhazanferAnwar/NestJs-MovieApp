@@ -3,8 +3,8 @@ import { AuthService } from './auth.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { User } from './user/user.schema';
-import { RegisterDto } from './dto/register.dto';
-import { LogInDto } from './dto/log-in.dto';
+import { RegisterDTO } from './dto/register.dto';
+import { LogInDTO } from './dto/log-in.dto';
 import * as bcrypt from 'bcrypt';
 
 describe('AuthService', () => {
@@ -47,7 +47,7 @@ describe('AuthService', () => {
 
   describe('register', () => {
     it('should successfully register a new user', async () => {
-      const registerDto: RegisterDto = {
+      const registerDto: RegisterDTO = {
         username: 'testuser',
         email: 'test@example.com',
         password: 'password123',
@@ -72,7 +72,7 @@ describe('AuthService', () => {
     });
 
     it('should throw an error if user already exists', async () => {
-      const registerDto: RegisterDto = {
+      const registerDto: RegisterDTO = {
         username: 'existinguser',
         email: 'existing@example.com',
         password: 'password123',
@@ -86,7 +86,7 @@ describe('AuthService', () => {
 
   describe('login', () => {
     it('should successfully login with valid credentials', async () => {
-      const loginDto: LogInDto = {
+      const loginDto: LogInDTO = {
         username: 'testuser',
         password: 'password123',
       };
@@ -112,7 +112,7 @@ describe('AuthService', () => {
     });
 
     it('should throw an error for invalid credentials', async () => {
-      const loginDto: LogInDto = {
+      const loginDto: LogInDTO = {
         username: 'testuser',
         password: 'wrongpassword',
       };
