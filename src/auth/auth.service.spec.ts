@@ -6,6 +6,7 @@ import { User } from './user/user.schema';
 import { RegisterDTO } from './dto/register.dto';
 import { LogInDTO } from './dto/log-in.dto';
 import * as bcrypt from 'bcrypt';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -19,7 +20,7 @@ describe('AuthService', () => {
 
   // Mock JwtService
   const mockJwtService = {
-    sign: jest.fn(),
+    sign: jest.fn().mockReturnValue('mocktoken'),
   };
 
   beforeEach(async () => {
@@ -55,11 +56,21 @@ describe('AuthService', () => {
         lastName: 'User',
       };
 
+      // Simulate no existing user
       mockUserModel.findOne.mockResolvedValueOnce(null);
-      mockUserModel.create.mockResolvedValueOnce({
+
+      // Mock save method for new user
+      const mockNewUser = {
         ...registerDto,
-        _id: 'user123',
-      });
+        save: jest.fn().mockResolvedValue({
+          firstName: registerDto.firstName,
+          lastName: registerDto.lastName,
+          email: registerDto.email,
+          username: registerDto.username,
+        }),
+      };
+
+      mockUserModel.create.mockResolvedValueOnce(mockNewUser);
 
       const result = await authService.register(registerDto);
 
@@ -69,8 +80,12 @@ describe('AuthService', () => {
           { email: registerDto.email }
         ]
       });
-      expect(mockUserModel.create).toHaveBeenCalled();
-      expect(result).toBeDefined();
+      expect(result).toEqual({
+        firstName: registerDto.firstName,
+        lastName: registerDto.lastName,
+        email: registerDto.email,
+        username: registerDto.username,
+      });
     });
 
     it('should throw an error if user already exists', async () => {
@@ -84,46 +99,63 @@ describe('AuthService', () => {
 
       mockUserModel.findOne.mockResolvedValueOnce({ username: 'existinguser' });
 
+      await expect(authService.register(registerDto)).rejects.toThrow(HttpException);
       await expect(authService.register(registerDto)).rejects.toThrow('User already exists');
     });
   });
 
-  describe('login', () => {
-    it('should successfully login with valid credentials', async () => {
-      const loginDto: LogInDTO = {
-        username: 'testuser',
-        password: 'password123',
-      };
+  describe('validateUser', () => {
+    it('should validate user with correct credentials', async () => {
+      const username = 'testuser';
+      const password = 'password123';
+      const salt = await bcrypt.genSalt();
+      const passwordHash = await bcrypt.hash(password, salt);
 
       const mockUser = {
         _id: 'user123',
-        username: 'testuser',
-        password: await bcrypt.hash('password123', 10),
+        username,
+        passwordHash,
       };
 
       mockUserModel.findOne.mockResolvedValueOnce(mockUser);
-      mockJwtService.sign.mockReturnValueOnce('mocktoken');
 
-      const result = await authService.login(loginDto);
+      const result = await authService.validateUser(username, password);
 
       expect(result).toEqual({
-        access_token: 'mocktoken',
-        user: {
-          username: mockUser.username,
-          _id: mockUser._id,
-        },
+        _id: 'user123',
+        username,
       });
     });
 
-    it('should throw an error for invalid credentials', async () => {
-      const loginDto: LogInDTO = {
-        username: 'testuser',
-        password: 'wrongpassword',
-      };
+    it('should return null for invalid credentials', async () => {
+      const username = 'testuser';
+      const password = 'password123';
+      const wrongPassword = 'wrongpassword';
 
       mockUserModel.findOne.mockResolvedValueOnce(null);
 
-      await expect(authService.login(loginDto)).rejects.toThrow('Invalid credentials');
+      const result = await authService.validateUser(username, wrongPassword);
+
+      expect(result).toBeNull();
+    });
+  });
+
+  describe('login', () => {
+    it('should generate access token', async () => {
+      const mockUser = {
+        _id: 'user123',
+        username: 'testuser',
+      };
+
+      const result = await authService.login(mockUser);
+
+      expect(result).toEqual({
+        access_token: 'mocktoken',
+      });
+      expect(mockJwtService.sign).toHaveBeenCalledWith({
+        userId: mockUser._id,
+        username: mockUser.username,
+      });
     });
   });
 });
