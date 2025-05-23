@@ -51,6 +51,8 @@ describe('AuthService', () => {
         username: 'testuser',
         email: 'test@example.com',
         password: 'password123',
+        firstName: 'Test',
+        lastName: 'User',
       };
 
       mockUserModel.findOne.mockResolvedValueOnce(null);
@@ -76,6 +78,8 @@ describe('AuthService', () => {
         username: 'existinguser',
         email: 'existing@example.com',
         password: 'password123',
+        firstName: 'Existing',
+        lastName: 'User',
       };
 
       mockUserModel.findOne.mockResolvedValueOnce({ username: 'existinguser' });
