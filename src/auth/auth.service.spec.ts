@@ -12,11 +12,10 @@ describe('AuthService', () => {
   let authService: AuthService;
   let jwtService: JwtService;
 
-  // Mocked functions to simulate Mongoose model methods
+  // Create mock objects to simulate Mongoose model methods
   const mockUserModel = {
     findOne: jest.fn(),
     create: jest.fn(),
-    save: jest.fn(),
   };
 
   // Mock JwtService
@@ -30,17 +29,7 @@ describe('AuthService', () => {
         AuthService,
         {
           provide: getModelToken(User.name),
-          useValue: jest.fn().mockImplementation(() => ({
-            ...mockUserModel,
-            save: jest.fn().mockImplementation(function(this: any) {
-              return Promise.resolve({
-                firstName: this.firstName,
-                lastName: this.lastName,
-                email: this.email,
-                username: this.username,
-              });
-            }),
-          })),
+          useValue: mockUserModel,
         },
         {
           provide: JwtService,
@@ -68,6 +57,21 @@ describe('AuthService', () => {
 
       // Simulate no existing user
       mockUserModel.findOne.mockResolvedValueOnce(null);
+
+      const mockNewUser = {
+        firstName: registerDto.firstName,
+        lastName: registerDto.lastName,
+        email: registerDto.email,
+        username: registerDto.username,
+        save: jest.fn().mockResolvedValue({
+          firstName: registerDto.firstName,
+          lastName: registerDto.lastName,
+          email: registerDto.email,
+          username: registerDto.username,
+        }),
+      };
+
+      mockUserModel.create.mockResolvedValueOnce(mockNewUser);
 
       const result = await authService.register(registerDto);
 
@@ -112,9 +116,13 @@ describe('AuthService', () => {
         _id: 'user123',
         username,
         passwordHash,
+        lean: jest.fn().mockReturnThis(),
       };
 
-      mockUserModel.findOne.mockResolvedValueOnce(mockUser);
+      mockUserModel.findOne.mockReturnValueOnce({
+        ...mockUser,
+        lean: () => mockUser,
+      });
 
       const result = await authService.validateUser(username, password);
 
