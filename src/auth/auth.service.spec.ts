@@ -12,10 +12,11 @@ describe('AuthService', () => {
   let authService: AuthService;
   let jwtService: JwtService;
 
-  // Mock User model
+  // Mocked functions to simulate Mongoose model methods
   const mockUserModel = {
     findOne: jest.fn(),
     create: jest.fn(),
+    save: jest.fn(),
   };
 
   // Mock JwtService
@@ -29,7 +30,17 @@ describe('AuthService', () => {
         AuthService,
         {
           provide: getModelToken(User.name),
-          useValue: mockUserModel,
+          useValue: jest.fn().mockImplementation(() => ({
+            ...mockUserModel,
+            save: jest.fn().mockImplementation(function(this: any) {
+              return Promise.resolve({
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                username: this.username,
+              });
+            }),
+          })),
         },
         {
           provide: JwtService,
@@ -39,7 +50,6 @@ describe('AuthService', () => {
     }).compile();
 
     authService = module.get<AuthService>(AuthService);
-    jwtService = module.get<JwtService>(JwtService);
   });
 
   afterEach(() => {
@@ -58,19 +68,6 @@ describe('AuthService', () => {
 
       // Simulate no existing user
       mockUserModel.findOne.mockResolvedValueOnce(null);
-
-      // Mock save method for new user
-      const mockNewUser = {
-        ...registerDto,
-        save: jest.fn().mockResolvedValue({
-          firstName: registerDto.firstName,
-          lastName: registerDto.lastName,
-          email: registerDto.email,
-          username: registerDto.username,
-        }),
-      };
-
-      mockUserModel.create.mockResolvedValueOnce(mockNewUser);
 
       const result = await authService.register(registerDto);
 
